@@ -16,4 +16,9 @@ public class Produto {
     private float altura;
     private float comprimento;
     private float largura;
+
+    // Chave estrangeira, um produto pode ter várias cores
+    @ManyToOne
+    @JoinColumn(name = "id_cor_produto", nullable = false)
+    private CorProduto cor_produto;
 }
