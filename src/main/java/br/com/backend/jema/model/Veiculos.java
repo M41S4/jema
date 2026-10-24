@@ -3,6 +3,8 @@ package br.com.backend.jema.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "veiculos")
@@ -16,4 +18,7 @@ public class Veiculos {
     private String tipoVeiculo;
     private String placa;
     private String chassi;
+
+    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL)
+    private List<ManutencaoVeiculo> manutencoes;
 }

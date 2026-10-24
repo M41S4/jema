@@ -1,8 +1,6 @@
 package br.com.backend.jema.model;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
