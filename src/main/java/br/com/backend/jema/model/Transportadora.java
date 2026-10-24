@@ -2,10 +2,11 @@ package br.com.backend.jema.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.util.List; // 1. Certifique-se de ter essa importação
 
 @Entity
 @Data
-@Table(name = "veiculos")
+@Table(name = "transportadora")
 public class Transportadora {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,7 +16,11 @@ public class Transportadora {
     private String cnpjTransportadora;
     private String telefoneTransportadora;
 
-    @OneToMany
+
+    @OneToOne(mappedBy = "transportadoraMotorista")
+    private Motorista motorista;
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_veiculo", nullable = false)
     private Veiculos veiculosTransportadora;
 }
