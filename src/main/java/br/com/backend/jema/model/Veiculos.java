@@ -19,6 +19,7 @@ public class Veiculos {
     private String placa;
     private String chassi;
 
-    @OneToMany(mappedBy = "veiculo", cascade = CascadeType.ALL)
-    private List<ManutencaoVeiculo> manutencoes;
+    @ManyToOne
+    @JoinColumn(name = "id_transportadora")
+    private Transportadora transportadora;
 }

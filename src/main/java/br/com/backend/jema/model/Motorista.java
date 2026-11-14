@@ -24,7 +24,7 @@ public class Motorista {
     @OneToMany(mappedBy = "motorista", cascade = CascadeType.ALL)
     private List<DisponibilidadeMotorista> disponibilidades;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_transportadora")
     private Transportadora transportadoraMotorista;
 
