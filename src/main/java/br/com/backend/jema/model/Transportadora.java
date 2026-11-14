@@ -17,10 +17,9 @@ public class Transportadora {
     private String telefoneTransportadora;
 
 
-    @OneToOne(mappedBy = "transportadoraMotorista")
-    private Motorista motorista;
+    @OneToMany(mappedBy = "transportadoraMotorista")
+    private List<Motorista> motoristas;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_veiculo", nullable = false)
-    private Veiculos veiculosTransportadora;
+    @OneToMany(mappedBy = "transportadora")
+    private List<Veiculos> veiculos;
 }
