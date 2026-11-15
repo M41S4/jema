@@ -1,3 +1,4 @@
+
 server:
   port: 8081
 
@@ -15,3 +16,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+app:
+  datasource:
+    mysql:
+      url: jdbc:mysql://localhost:3306/bd_jema_usuarios
+      username: root
+      password: ""
+      driver-class-name: com.mysql.cj.jdbc.Driver
