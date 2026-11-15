@@ -6,6 +6,7 @@ import br.com.backend.jema.service.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import br.com.backend.jema.dto.LoginUsuarioDTO;
 
 import java.util.Map;
 
@@ -39,5 +40,25 @@ public class UsuarioController {
                     .badRequest()
                     .body(Map.of("erro", e.getMessage()));
         }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginUsuarioDTO dados) {
+
+        String token = usuarioService.autenticar(dados);
+
+        if (token == null) {
+            return ResponseEntity
+                    .status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("erro", "E-mail ou senha inválidos."));
+        }
+
+        return ResponseEntity.ok(
+                Map.of(
+                        "mensagem", "Login realizado com sucesso!",
+                        "token", token,
+                        "tipo", "Bearer"
+                )
+        );
     }
 }

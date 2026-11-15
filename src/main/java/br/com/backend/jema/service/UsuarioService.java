@@ -1,6 +1,6 @@
 
 package br.com.backend.jema.service;
-
+import br.com.backend.jema.security.JwtService;
 import br.com.backend.jema.dto.CadastroUsuarioDTO;
 import br.com.backend.jema.dto.LoginUsuarioDTO;
 import br.com.backend.jema.repository.UsuarioRepository;
@@ -12,13 +12,16 @@ public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public UsuarioService(
             UsuarioRepository usuarioRepository,
-            PasswordEncoder passwordEncoder) {
+            PasswordEncoder passwordEncoder,
+            JwtService jwtService) {
 
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public void cadastrar(CadastroUsuarioDTO dados) {
@@ -52,21 +55,25 @@ public class UsuarioService {
         );
     }
 
-    public boolean autenticar(LoginUsuarioDTO dados) {
+    public String autenticar(LoginUsuarioDTO dados) {
 
         if (dados.email() == null || dados.email().isBlank()
                 || dados.senha() == null || dados.senha().isBlank()) {
-            return false;
+            return null;
         }
 
         String email = dados.email().trim().toLowerCase();
 
         String senhaHash = usuarioRepository.buscarSenhaPorEmail(email);
 
-        if (senhaHash == null) {
-            return false;
+        if (senhaHash == null ||
+                !passwordEncoder.matches(dados.senha(), senhaHash)) {
+            return null;
         }
 
-        return passwordEncoder.matches(dados.senha(), senhaHash);
+        return jwtService.gerarToken(email);
     }
+
+
+
 }
