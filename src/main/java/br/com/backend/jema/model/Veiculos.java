@@ -18,6 +18,8 @@ public class Veiculos {
     private String tipoVeiculo;
     private String placa;
     private String chassi;
+    private Double capacidadePesoKg;
+    private Double capacidadeVolumeM3;
 
     @ManyToOne
     @JoinColumn(name = "id_transportadora")

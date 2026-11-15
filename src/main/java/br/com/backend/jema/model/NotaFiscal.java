@@ -1,20 +1,22 @@
+
 package br.com.backend.jema.model;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
+@Entity
+@Data
+@Table(name = "nota_fiscal")
 public class NotaFiscal {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String numero_nf;
     private String serie_nf;
     private String chave_nf;
     private LocalDateTime data_emissao;
-
 }
