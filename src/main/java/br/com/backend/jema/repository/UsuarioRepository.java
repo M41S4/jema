@@ -41,4 +41,19 @@ public class UsuarioRepository {
 
         jdbcTemplate.update(sql, nome, email, senhaHash);
     }
+
+    public String buscarSenhaPorEmail(String email) {
+
+        String sql = """
+            SELECT senha
+            FROM usuarios
+            WHERE email = ?
+            """;
+
+        return jdbcTemplate.query(
+                sql,
+                (resultado, linha) -> resultado.getString("senha"),
+                email
+        ).stream().findFirst().orElse(null);
+    }
 }

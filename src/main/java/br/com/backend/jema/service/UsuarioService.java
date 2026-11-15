@@ -2,6 +2,7 @@
 package br.com.backend.jema.service;
 
 import br.com.backend.jema.dto.CadastroUsuarioDTO;
+import br.com.backend.jema.dto.LoginUsuarioDTO;
 import br.com.backend.jema.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -49,5 +50,23 @@ public class UsuarioService {
                 dados.email().trim().toLowerCase(),
                 senhaHash
         );
+    }
+
+    public boolean autenticar(LoginUsuarioDTO dados) {
+
+        if (dados.email() == null || dados.email().isBlank()
+                || dados.senha() == null || dados.senha().isBlank()) {
+            return false;
+        }
+
+        String email = dados.email().trim().toLowerCase();
+
+        String senhaHash = usuarioRepository.buscarSenhaPorEmail(email);
+
+        if (senhaHash == null) {
+            return false;
+        }
+
+        return passwordEncoder.matches(dados.senha(), senhaHash);
     }
 }
